@@ -84,6 +84,15 @@ function App() {
     setTaches([...taches, nouvelleTache]);
   }
 
+  function onModifierTitre(id, nouveauTitre) {
+    console.log("Modifier le titre de la tâche", id, "en", nouveauTitre);
+    setTaches(
+      taches.map((tache) =>
+        tache.id === id ? { ...tache, titre: nouveauTitre } : tache,
+      ),
+    );
+  }
+
   return (
     <div className="app">
       <Entete />
@@ -100,6 +109,7 @@ function App() {
           taches={tachesVisibles}
           onBasculer={basculerTache}
           onSupprimer={supprimerTache}
+          onModifierTitre={onModifierTitre}
         />
         {/* Supprimer toutes les tâches terminées */}
         {taches.some((tache) => tache.terminee) && (
