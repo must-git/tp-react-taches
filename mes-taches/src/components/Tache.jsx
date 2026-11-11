@@ -1,8 +1,9 @@
-function Tache({ titre, terminee }) {
+function Tache({ id, titre, terminee, onBasculer, onSupprimer }) {
   return (
     <li className={`tache ${terminee ? 'terminee' : ''}`}>
       <span className="titre">{titre}</span>
-      <span className="statut">{terminee ? '✅' : '⬜'}</span>
+      <input type="checkbox" checked={terminee} onChange={() => onBasculer(id)} />
+      <button className="danger" onClick={() => onSupprimer(id)}>Supprimer</button>
     </li>
   );
 }
