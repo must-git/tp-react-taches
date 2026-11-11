@@ -20,6 +20,7 @@ function App() {
   );
   const [erreur, setErreur] = useState(null);
   const [filtre, setFiltre] = useState("toutes");
+  const [horlogeVisible, setHorlogeVisible] = useState(true);
 
   const tachesRestantes = taches.filter((task) => !task.terminee).length;
 
@@ -133,7 +134,10 @@ function App() {
         <Statistiques taches={taches} />
       </Carte>
       <Carte titre="Heure actuelle">
-        <Horloge />
+        <button onClick={() => setHorlogeVisible(!horlogeVisible)}>
+          {horlogeVisible ? "Masquer l'horloge" : "Afficher l'horloge"}
+        </button>
+        {horlogeVisible && <Horloge />}
       </Carte>
       <Pied auteur="Mustapha ACHAHROUR" />
     </div>

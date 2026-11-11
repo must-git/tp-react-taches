@@ -9,6 +9,7 @@ function Horloge() {
     }, 1000)
 
     return () => {
+      console.log("Nettoyage de l'horloge : intervalle supprimé")
       clearInterval(intervalId)
     }
 
