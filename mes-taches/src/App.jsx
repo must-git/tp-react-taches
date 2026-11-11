@@ -6,18 +6,43 @@ import Compteur from "./components/Compteur.jsx";
 import FormulaireAjout from "./components/FormulaireAjout.jsx";
 import Filtres from "./components/Filtres.jsx";
 import Statistiques from "./components/Statistiques.jsx";
-import { useState } from "react";
-
-const TACHES_INITIALES = [
-  { id: 1, titre: "Installer Node.js et Vite", terminee: true },
-  { id: 2, titre: "Comprendre les composants", terminee: true },
-  { id: 3, titre: "Passer des données avec les props", terminee: false },
-  { id: 4, titre: "Gérer l'état avec useState", terminee: false },
-];
+import Horloge from "./components/Horloge.jsx";
+import { useState, useEffect } from "react";
 
 function App() {
-  const [taches, setTaches] = useState(TACHES_INITIALES);
+  const [taches, setTaches] = useState([]);
+  const [chargement, setChargement] = useState(true);
+  const [erreur, setErreur] = useState(null);
   const [filtre, setFiltre] = useState("toutes");
+
+  const tachesRestantes = taches.filter((task) => !task.terminee).length;
+
+  useEffect(() => {
+    document.title = `(${tachesRestantes}) Mes tâches`;
+  }, [tachesRestantes]);
+
+  useEffect(() => {
+    let annule = false;
+
+    fetch("/tachess.json")
+      .then((reponse) => {
+        if (!reponse.ok) throw new Error(`Erreur HTTP ${reponse.status}`);
+        return reponse.json();
+      })
+      .then((donnees) => {
+        if (!annule) setTaches(donnees);
+      })
+      .catch((err) => {
+        if (!annule) setErreur(err.message);
+      })
+      .finally(() => {
+        if (!annule) setChargement(false);
+      });
+
+    return () => {
+      annule = true;
+    };
+  }, []);
 
   const tachesVisibles =
     filtre === "toutes"
@@ -52,6 +77,13 @@ function App() {
       <Entete />
       <Carte titre="Ma liste">
         <Filtres filtre={filtre} onChanger={setFiltre} />
+        {chargement ? (
+          <p className="vide">Chargement des tâches…</p>
+        ) : erreur ? (
+          <p className="erreur">Erreur : {erreur}</p>
+        ) : tachesVisibles.length === 0 ? (
+          <p className="vide">Aucune tâche à afficher.</p>
+        ) : null}
         <ListeTaches
           taches={tachesVisibles}
           onBasculer={basculerTache}
@@ -67,7 +99,10 @@ function App() {
       <Carte titre="Statistiques">
         <Statistiques taches={taches} />
       </Carte>
-      <Pied />
+      <Carte titre="Heure actuelle">
+        <Horloge />
+      </Carte>
+      <Pied auteur="Mustapha ACHAHROUR" />
     </div>
   );
 }
