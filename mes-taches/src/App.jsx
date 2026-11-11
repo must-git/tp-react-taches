@@ -32,9 +32,8 @@ function App() {
   }, [taches]);
 
   useEffect(() => {
-
     if (!chargement) return;
-    
+
     let annule = false;
 
     fetch("/taches.json")
@@ -102,6 +101,17 @@ function App() {
           onBasculer={basculerTache}
           onSupprimer={supprimerTache}
         />
+        {/* Supprimer toutes les tâches terminées */}
+        {taches.some((tache) => tache.terminee) && (
+          <button
+            className="danger"
+            onClick={() => {
+              setTaches(taches.filter((tache) => !tache.terminee));
+            }}
+          >
+            Supprimer toutes les tâches terminées
+          </button>
+        )}
       </Carte>
       <Carte titre="Compteur">
         <Compteur />
