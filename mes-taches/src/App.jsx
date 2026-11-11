@@ -10,8 +10,14 @@ import Horloge from "./components/Horloge.jsx";
 import { useState, useEffect } from "react";
 
 function App() {
-  const [taches, setTaches] = useState([]);
-  const [chargement, setChargement] = useState(true);
+  const [taches, setTaches] = useState(
+    localStorage.getItem("taches")
+      ? JSON.parse(localStorage.getItem("taches"))
+      : [],
+  );
+  const [chargement, setChargement] = useState(
+    () => localStorage.getItem("taches") === null,
+  );
   const [erreur, setErreur] = useState(null);
   const [filtre, setFiltre] = useState("toutes");
 
@@ -22,6 +28,13 @@ function App() {
   }, [tachesRestantes]);
 
   useEffect(() => {
+    localStorage.setItem("taches", JSON.stringify(taches));
+  }, [taches]);
+
+  useEffect(() => {
+
+    if (!chargement) return;
+    
     let annule = false;
 
     fetch("/taches.json")
