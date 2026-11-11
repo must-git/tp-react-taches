@@ -24,7 +24,7 @@ function App() {
   useEffect(() => {
     let annule = false;
 
-    fetch("/tachess.json")
+    fetch("/taches.json")
       .then((reponse) => {
         if (!reponse.ok) throw new Error(`Erreur HTTP ${reponse.status}`);
         return reponse.json();
