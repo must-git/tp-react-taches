@@ -16,7 +16,7 @@
   --danger: #c4314b;
   --rayon: 10px;
 
-  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  font-family: system-ui, "Segoe UI", Roboto, sans-serif;
   line-height: 1.5;
   color: var(--texte);
   background: var(--fond);
@@ -36,9 +36,13 @@
   }
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
-body { margin: 0; }
+body {
+  margin: 0;
+}
 
 /* ---------- Mise en page ---------- */
 .app {
@@ -50,8 +54,14 @@ body { margin: 0; }
   gap: 16px;
 }
 
-.entete h1 { margin: 0; font-size: 1.8rem; }
-.entete p { margin: 4px 0 0; color: var(--texte-doux); }
+.entete h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+.entete p {
+  margin: 4px 0 0;
+  color: var(--texte-doux);
+}
 
 .pied {
   text-align: center;
@@ -66,7 +76,10 @@ body { margin: 0; }
   border-radius: var(--rayon);
   padding: 16px;
 }
-.carte h2 { margin: 0 0 12px; font-size: 1.1rem; }
+.carte h2 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
 
 /* ---------- Boutons et champs ---------- */
 button {
@@ -78,13 +91,27 @@ button {
   color: var(--texte);
   cursor: pointer;
 }
-button:hover { border-color: var(--accent); }
-button:disabled { opacity: 0.5; cursor: not-allowed; }
-button.principal { background: var(--accent); border-color: var(--accent); color: #fff; }
-button.danger { color: var(--danger); }
-button.actif { background: var(--accent-doux); border-color: var(--accent); }
+button:hover {
+  border-color: var(--accent);
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+button.principal {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+button.danger {
+  color: var(--danger);
+}
+button.actif {
+  background: var(--accent-doux);
+  border-color: var(--accent);
+}
 
-input[type='text'] {
+input[type="text"] {
   font: inherit;
   flex: 1;
   min-width: 0;
@@ -113,29 +140,53 @@ input[type='text'] {
   border: 1px solid var(--bordure);
   border-radius: 8px;
 }
-.tache .titre { flex: 1; }
-.tache.terminee .titre { text-decoration: line-through; color: var(--texte-doux); }
+.tache .titre {
+  flex: 1;
+}
+.tache.terminee .titre {
+  text-decoration: line-through;
+  color: var(--texte-doux);
+}
 
-.vide { color: var(--texte-doux); font-style: italic; margin: 0; }
+.vide {
+  color: var(--texte-doux);
+  font-style: italic;
+  margin: 0;
+}
 
 /* ---------- Formulaire, filtres, statistiques ---------- */
-.formulaire, .filtres, .ligne {
+.formulaire,
+.filtres,
+.ligne {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
   align-items: center;
 }
 
-.stats { display: flex; gap: 16px; flex-wrap: wrap; margin: 0; }
-.stats strong { font-size: 1.4rem; display: block; }
-.stats .terminees strong { color: var(--succes); }
+.stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 0;
+}
+.stats strong {
+  font-size: 1.4rem;
+  display: block;
+}
+.stats .terminees strong {
+  color: var(--succes);
+}
 
 /* ---------- Horloge et compteur ---------- */
-.horloge, .valeur-compteur {
+.horloge,
+.valeur-compteur {
   font-variant-numeric: tabular-nums;
   font-size: 1.6rem;
   font-weight: 600;
   margin: 0;
 }
 
-.erreur { color: var(--danger); }
+.erreur {
+  color: var(--danger);
+}
