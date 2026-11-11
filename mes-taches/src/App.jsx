@@ -3,6 +3,9 @@ import ListeTaches from "./components/ListeTaches.jsx";
 import Pied from "./components/Pied.jsx";
 import Carte from "./components/Carte.jsx";
 import Compteur from "./components/Compteur.jsx";
+import FormulaireAjout from "./components/FormulaireAjout.jsx";
+import Filtres from "./components/Filtres.jsx";
+import Statistiques from "./components/Statistiques.jsx";
 import { useState } from "react";
 
 const TACHES_INITIALES = [
@@ -14,6 +17,14 @@ const TACHES_INITIALES = [
 
 function App() {
   const [taches, setTaches] = useState(TACHES_INITIALES);
+  const [filtre, setFiltre] = useState("toutes");
+
+  const tachesVisibles =
+    filtre === "toutes"
+      ? taches
+      : taches.filter((tache) =>
+          filtre === "terminees" ? tache.terminee : !tache.terminee,
+        );
 
   function basculerTache(id) {
     setTaches(
@@ -27,14 +38,34 @@ function App() {
     setTaches(taches.filter((tache) => tache.id !== id));
   }
 
+  function ajouterTache(titre) {
+    const nouvelleTache = {
+      id: Date.now(),
+      titre,
+      terminee: false,
+    };
+    setTaches([...taches, nouvelleTache]);
+  }
+
   return (
     <div className="app">
       <Entete />
       <Carte titre="Ma liste">
-        <ListeTaches taches={taches} onBasculer={basculerTache} onSupprimer={supprimerTache} />
+        <Filtres filtre={filtre} onChanger={setFiltre} />
+        <ListeTaches
+          taches={tachesVisibles}
+          onBasculer={basculerTache}
+          onSupprimer={supprimerTache}
+        />
       </Carte>
       <Carte titre="Compteur">
         <Compteur />
+      </Carte>
+      <Carte titre="Ajouter une tâche">
+        <FormulaireAjout onAjouter={ajouterTache} />
+      </Carte>
+      <Carte titre="Statistiques">
+        <Statistiques taches={taches} />
       </Carte>
       <Pied />
     </div>
